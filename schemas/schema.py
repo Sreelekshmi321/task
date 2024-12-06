@@ -1,30 +1,38 @@
+
 from pydantic import BaseModel
-# from typing import Optional
-# validation
-# optional[int]
+from typing import List, Optional
 
-# support price have three fields
 class SupportPrice(BaseModel):
-
-    id: int
     name: str
     price: float
+    description: str
 
 
-# support category have three fields
+
 class SupportCategory(BaseModel):
     id: int
     name: str
-    support_price: int
+    description: str
+    active: bool
+    prices: List[SupportPrice] = []
 
-# support purpose have three fields
+
+
 class SupportPurpose(BaseModel):
     id: int
     name: str
-    support_category: int
+    description: str
+    categories: List[SupportCategory] = []
 
 
+class CategoryPrice(BaseModel):
+    price_id: int
+    category_id: int
 
+
+class PurposeCategory(BaseModel):
+    category_id: int
+    purpose_id:int
 
 
 
