@@ -187,7 +187,7 @@ async def update_category_to_purpose(purpose_id: int, category_id: int, db: Sess
 
 
 # GET category TO purpose DATA BASED ON ID
-@support_data.get("/support-purpose/{id}", response_model=PurposeCategory)
+@support_data.get("/purposes/{purpose_id}}/", response_model=PurposeCategory)
 async def get_support_purpose(id: int, db: Session = Depends(get_db)):
     query = (
         db.query(purpose_category.c.purpose_id,purpose_category.c.category_id,support_category.c.name.label("category_name"),support_purpose.c.name.label("purpose_name"),)
