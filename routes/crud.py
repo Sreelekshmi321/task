@@ -186,6 +186,22 @@ async def update_category_to_purpose(purpose_id: int, category_id: int, db: Sess
     return {"message": "Category  updatedto purpose"}
 
 
+# GET category TO purpose DATA BASED ON ID
+@support_data.get("/support-purpose/{id}", response_model=PurposeCategory)
+async def get_support_purpose(id: int, db: Session = Depends(get_db)):
+    query = (
+        db.query(purpose_category.c.purpose_id,purpose_category.c.category_id,support_category.c.name.label("category_name"),support_purpose.c.name.label("purpose_name"),)
+        .join(support_category, purpose_category.c.category_id == support_category.c.id)
+        .join(support_purpose, purpose_category.c.purpose_id == support_purpose.c.id)
+        .filter(purpose_category.c.purpose_id == id)
+    )
+
+    result = query.all()
+    if not result:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Not have data")
+
+    return [PurposeCategory(purpose_id=row.purpose_id,category_id=row.category_id,category_name=row.category_name,purpose_name=row.purpose_name, )for row in result
+]
 
 
 
