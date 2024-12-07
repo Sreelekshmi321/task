@@ -33,6 +33,8 @@ class CategoryPrice(BaseModel):
 class PurposeCategory(BaseModel):
     category_id: int
     purpose_id:int
+    category_name: Optional[str] = None
+    purpose_name: Optional[str] = None
 
 
 
